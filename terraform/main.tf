@@ -49,15 +49,15 @@ module "eks" {
     kube-proxy = {}
     vpc-cni    = {}
   }
-  eks_managed_node_groups = {
-    initial = {
-      instance_types = ["m5.large"]
+  # eks_managed_node_groups = {
+  #   initial = {
+  #     instance_types = ["m5.large"]
 
-      min_size     = 3
-      max_size     = 10
-      desired_size = 5
-    }
-  }
+  #     min_size     = 3
+  #     max_size     = 10
+  #     desired_size = 5
+  #   }
+  # }
 
   vpc_id     = module.vpc.vpc_id
   subnet_ids = module.vpc.private_subnets
