@@ -8,7 +8,7 @@ resources:
 # - argo_base/argocd-alb-service.yaml
 # - argo_base/argo-cd-ui-ingress.yaml
 # - app_of_apps/addons.yaml
-# - app_of_apps/applications.yaml
+- app_of_apps/applications.yaml
 - https://raw.githubusercontent.com/argoproj/argo-cd/master/manifests/ha/install.yaml
 
 # patchesStrategicMerge:

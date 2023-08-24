@@ -1,37 +1,37 @@
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: external-dns
-  namespace: argocd
-spec:
-  project: default
-  source:
-    chart: external-dns
-    repoURL:  https://kubernetes-sigs.github.io/external-dns/
-    targetRevision: 1.6.0
-    helm:
-      releaseName: external-dns
-      valuesObject:
-        clusterName: terraform
-        serviceAccount:
-          create: true
-          name: external-dns-eks
-          annotations:
-            eks.amazonaws.com/role-arn: "arn:aws:iam::345796856102:role/external-dns-eks-irsa"
-        ignoreDifferences:
-        - group: ""
-          jsonPointers:
-          - /data
-          kind: Secret
-  destination:
-    server: "https://kubernetes.default.svc"
-    namespace: external-dns
-  syncPolicy:
-    syncOptions:
-    - CreateNamespace=true
-    - RespectIgnoreDifferences=true
-  ignoreDifferences:
-    - group: v1=
-      kind: Secret
-      jsonPointers:
-      - /data
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata:
+#   name: external-dns
+#   namespace: argocd
+# spec:
+#   project: default
+#   source:
+#     chart: external-dns
+#     repoURL:  https://kubernetes-sigs.github.io/external-dns/
+#     targetRevision: 1.6.0
+#     helm:
+#       releaseName: external-dns
+#       valuesObject:
+#         clusterName: terraform
+#         serviceAccount:
+#           create: true
+#           name: external-dns-eks
+#           annotations:
+#             eks.amazonaws.com/role-arn: "arn:aws:iam::345796856102:role/external-dns-eks-irsa"
+#         ignoreDifferences:
+#         - group: ""
+#           jsonPointers:
+#           - /data
+#           kind: Secret
+#   destination:
+#     server: "https://kubernetes.default.svc"
+#     namespace: external-dns
+#   syncPolicy:
+#     syncOptions:
+#     - CreateNamespace=true
+#     - RespectIgnoreDifferences=true
+#   ignoreDifferences:
+#     - group: v1=
+#       kind: Secret
+#       jsonPointers:
+#       - /data

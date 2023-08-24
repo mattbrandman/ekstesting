@@ -1,53 +1,53 @@
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: aws-load-balancer-controller
-  namespace: argocd
-spec:
-  project: default
-  source:
-    chart: aws-load-balancer-controller
-    repoURL:  https://aws.github.io/eks-charts
-    targetRevision: 1.6.0
-    helm:
-      releaseName: aws-load-balancer-controller
-      valuesObject:
-        clusterName: terraform
-        serviceAccount:
-          create: true
-          name: aws-load-balancer-controller-eks
-          annotations:
-            eks.amazonaws.com/role-arn: "arn:aws:iam::345796856102:role/aws-load-balancer-controller-eks-irsa"
-        ignoreDifferences:
-        - group: ""
-          jsonPointers:
-          - /data
-          kind: Secret
-        - group: admissionregistration.k8s.io
-          jqPathExpressions:
-          - .webhooks[]?.clientConfig.caBundle
-          kind: MutatingWebhookConfiguration
-        - group: admissionregistration.k8s.io
-          jqPathExpressions:
-          - .webhooks[]?.clientConfig.caBundle
-          kind: ValidatingWebhookConfiguration
-  destination:
-    server: "https://kubernetes.default.svc"
-    namespace: kube-system
-  syncPolicy:
-    syncOptions:
-    - RespectIgnoreDifferences=true
-  ignoreDifferences:
-    - group: admissionregistration.k8s.io
-      kind: MutatingWebhookConfiguration
-      jqPathExpressions:
-      - '.webhooks[]?.clientConfig.caBundle'
-    - group: admissionregistration.k8s.io
-      kind: ValidatingWebhookConfiguration
-      jqPathExpressions:
-      - '.webhooks[]?.clientConfig.caBundle'
-    - group: ""
-      kind: Secret
-      jsonPointers:
-      - /data
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata:
+#   name: aws-load-balancer-controller
+#   namespace: argocd
+# spec:
+#   project: default
+#   source:
+#     chart: aws-load-balancer-controller
+#     repoURL:  https://aws.github.io/eks-charts
+#     targetRevision: 1.6.0
+#     helm:
+#       releaseName: aws-load-balancer-controller
+#       valuesObject:
+#         clusterName: terraform
+#         serviceAccount:
+#           create: true
+#           name: aws-load-balancer-controller-eks
+#           annotations:
+#             eks.amazonaws.com/role-arn: "arn:aws:iam::345796856102:role/aws-load-balancer-controller-eks-irsa"
+#         ignoreDifferences:
+#         - group: ""
+#           jsonPointers:
+#           - /data
+#           kind: Secret
+#         - group: admissionregistration.k8s.io
+#           jqPathExpressions:
+#           - .webhooks[]?.clientConfig.caBundle
+#           kind: MutatingWebhookConfiguration
+#         - group: admissionregistration.k8s.io
+#           jqPathExpressions:
+#           - .webhooks[]?.clientConfig.caBundle
+#           kind: ValidatingWebhookConfiguration
+#   destination:
+#     server: "https://kubernetes.default.svc"
+#     namespace: kube-system
+#   syncPolicy:
+#     syncOptions:
+#     - RespectIgnoreDifferences=true
+#   ignoreDifferences:
+#     - group: admissionregistration.k8s.io
+#       kind: MutatingWebhookConfiguration
+#       jqPathExpressions:
+#       - '.webhooks[]?.clientConfig.caBundle'
+#     - group: admissionregistration.k8s.io
+#       kind: ValidatingWebhookConfiguration
+#       jqPathExpressions:
+#       - '.webhooks[]?.clientConfig.caBundle'
+#     - group: ""
+#       kind: Secret
+#       jsonPointers:
+#       - /data
 
