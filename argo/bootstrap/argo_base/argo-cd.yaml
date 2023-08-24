@@ -10,7 +10,7 @@ spec:
   project: default
   source:
     path: argo/bootstrap
-    repoURL: https://github.com/mattbrandman/ekstesting
+    repoURL: https://github.com/mattbrandman/ekstesting.git
     targetRevision: HEAD
   syncPolicy:
     syncOptions:
