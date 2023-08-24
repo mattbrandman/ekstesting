@@ -10,5 +10,5 @@ spec:
   project: default
   source:
     path: chart
-    repoURL: git@github.com:mattbrandman/argoapps.git
+    repoURL: git@github.com:mattbrandman/ekstesting.git
     targetRevision: HEAD

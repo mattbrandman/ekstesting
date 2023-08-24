@@ -9,6 +9,6 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: chart
-    repoURL: https://github.com/mattbrandman/argo-addons
+    path: argo/bootstrap/argo_addons/chart
+    repoURL: https://github.com/mattbrandman/ekstesting
     targetRevision: HEAD
