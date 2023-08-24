@@ -1,0 +1,40 @@
+  apiVersion: networking.k8s.io/v1
+  kind: Ingress
+  metadata:
+    annotations:
+      kubernetes.io/ingress.class: alb
+      alb.ingress.kubernetes.io/backend-protocol: HTTPS
+      # Use this annotation (which must match a service name) to route traffic to HTTP2 backends.
+      alb.ingress.kubernetes.io/conditions.argogrpc: |
+        [{"field":"http-header","httpHeaderConfig":{"httpHeaderName": "Content-Type", "values":["application/grpc"]}}]
+      alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}]'
+      external-dns.alpha.kubernetes.io/hostname: argo.duoeks.com
+      alb.ingress.kubernetes.io/target-type: ip
+      alb.ingress.kubernetes.io/scheme: internet-facing
+      alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:345796856102:certificate/3002d232-daa4-4493-aeb7-9aaec53cfcf0
+      alb.ingress.kubernetes.io/healthcheck-protocol: HTTPS
+      alb.ingress.kubernetes.io/healthcheck-path: /healthz
+    name: argocd
+    namespace: argocd
+  spec:
+    rules:
+    - host: argo.duoeks.com
+      http:
+        paths:
+        - path: /
+          backend:
+            service:
+              name: argogrpc
+              port:
+                number: 443
+          pathType: Prefix
+        - path: /
+          backend:
+            service:
+              name: argocd-server
+              port:
+                number: 443
+          pathType: Prefix
+    tls:
+    - hosts:
+      - argo.duoeks.com

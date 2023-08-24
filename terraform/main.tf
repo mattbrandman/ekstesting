@@ -49,15 +49,22 @@ module "eks" {
     kube-proxy = {}
     vpc-cni    = {}
   }
-  # eks_managed_node_groups = {
-  #   initial = {
-  #     instance_types = ["m5.large"]
+  eks_managed_node_groups = {
+    initial = {
+      instance_types = ["m5.large"]
 
-  #     min_size     = 3
-  #     max_size     = 10
-  #     desired_size = 5
-  #   }
-  # }
+      min_size     = 1
+      max_size     = 10
+      desired_size = 1
+      taints = {
+        cilium = {
+          key    = "node.cilium.io/agent-not-ready"
+          value  = "true"
+          effect = "NO_EXECUTE"
+        }
+      }
+    }
+  }
 
   vpc_id     = module.vpc.vpc_id
   subnet_ids = module.vpc.private_subnets

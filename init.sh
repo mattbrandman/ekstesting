@@ -1,0 +1,3 @@
+kubectl delete ds -n kube-system kube-proxy
+kubectl delete ds -n kube-system aws-node
+helm install cilium cilium/cilium --version=1.14.1 --namespace kube-system --set eni.enabled=true --set ipam.mode=eni --set egressMasqueradeInterfaces=eth0 --set loadBalancer.algorithm=maglev --set hubble.enabled=true --set hubble.listenAddress=":4244" --set hubble.relay.enabled=true --set hubble.ui.enabled=true --set hubble.metrics.enabled="{dns,drop,tcp,flow,port-distribution,icmp,http}" --set kubeProxyReplacement="strict" --set k8sServiceHost="<EKS_HOST_NAME>" --set k8sServicePort=443 --set tunnel=disabled --set iamRole=arn:aws:iam::<ACCOUNT_NUMBER>:role/cilium-operator
